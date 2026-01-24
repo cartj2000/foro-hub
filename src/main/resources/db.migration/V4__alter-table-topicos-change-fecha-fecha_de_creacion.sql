@@ -1,0 +1,1 @@
+alter table topicos change fecha fecha_de_creacion datetime not null;
