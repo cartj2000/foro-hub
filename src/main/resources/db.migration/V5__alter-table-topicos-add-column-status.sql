@@ -1,2 +1,1 @@
-alter table topicos add status tinyint;
-update topicos set status = 1;
+alter table topicos add status varchar(7);
