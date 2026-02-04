@@ -45,7 +45,7 @@ public class TopicoController {
 
         //System.out.println(datos);
         //repository.save(new Topico(datos));
-        var topico = new Topico(datos);
+        var topico = new Topico(datos, autor, curso);
         repository.save(topico);
         var uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
         return ResponseEntity.created(uri).body(new DatosDetalleTopico(topico));

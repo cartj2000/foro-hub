@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface CursoRepository extends JpaRepository<Curso, Long> {
 //    Page<Curso> findAll(Pageable paginacion);
-    Page<Curso> findById(Long IdCurso, Pageable paginacion);
+//    Page<Curso> findById(Long IdCurso, Pageable paginacion);
 }

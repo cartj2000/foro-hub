@@ -11,11 +11,8 @@ public interface TopicoRepository extends JpaRepository<Topico, Long> {
     Page<Topico> findAllByStatus(StatusTopico status, Pageable paginacion);
 
     @Query("""
-            select t.status
-            from Topico t
-            where
-            t.status = 'ABIERTO' and
-            t.id = :idTopico
+            select count(t) > 0
+            from Topico t where t.status = 'ABIERTO' and t.id = :idTopico
             """)
-    boolean IsTopicoAbierto(Long idTopico);
+    boolean isTopicoAbierto(Long idTopico);
 }

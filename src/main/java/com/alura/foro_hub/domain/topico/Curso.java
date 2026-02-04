@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Curso(DatosRegistroCurso datos) {
+public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

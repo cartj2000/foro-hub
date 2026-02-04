@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Topico(DatosRegistroTopico datos) {
+public class Topico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,13 +35,13 @@ public class Topico(DatosRegistroTopico datos) {
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
-    public Topico(DatosRegistroTopico datos) {
+    public Topico(DatosRegistroTopico datos, Usuario autor, Curso curso) {
         this.id = null;
         this.titulo = datos.titulo();
         this.mensaje = datos.mensaje();
         this.fechaCreacion = LocalDateTime.now();
-        this.autor = datos.idUsuario();
-        this.curso = datos.idCurso();
+        this.autor = autor;
+        this.curso = curso;
         this.status = StatusTopico.ABIERTO;
     }
 

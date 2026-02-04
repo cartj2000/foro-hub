@@ -1,6 +1,7 @@
 package com.alura.foro_hub.domain.usuario;
 
 import com.alura.foro_hub.domain.topico.DatosActualizacionCurso;
+import com.alura.foro_hub.domain.topico.DatosActualizacionUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
