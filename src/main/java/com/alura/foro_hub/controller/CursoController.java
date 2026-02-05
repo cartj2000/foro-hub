@@ -56,8 +56,6 @@ public class CursoController {
     //public void eliminar(@PathVariable Long id){
     public ResponseEntity eliminar(@PathVariable Long id){
         repository.deleteById(id);
-        //var topico = repository.getReferenceById(id);
-        //topico.cerrar();
         return ResponseEntity.noContent().build();
     }
 
@@ -65,8 +63,8 @@ public class CursoController {
     //public void detallar(@PathVariable  Long id){
     public ResponseEntity detallar(@PathVariable  Long id){
         //repository.findById(id);
-        var topico = repository.getReferenceById(id);
-        return ResponseEntity.ok(new DatosDetalleTopico(topico));
+        var curso = repository.getReferenceById(id);
+        return ResponseEntity.ok(new DatosDetalleCurso(curso));
     }
 
 }

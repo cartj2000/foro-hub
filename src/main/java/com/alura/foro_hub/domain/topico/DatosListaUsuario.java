@@ -6,14 +6,14 @@ import com.alura.foro_hub.domain.usuario.Usuario;
 public record DatosListaUsuario(
     Long id,
     String login,
-    String contrasena
+    String nombre
 
     ) {
     public DatosListaUsuario(Usuario usuario) {
         this(
                 usuario.getId(),
                 usuario.getLogin(),
-                usuario.getContrasena()
+                usuario.getNombre()
         );
     }
 }

@@ -6,6 +6,6 @@ import jakarta.validation.constraints.NotNull;
 public record DatosActualizacionUsuario(
         @NotNull Long id,
         @NotBlank String login,
-        @NotBlank String contrasena
+        @NotBlank String nombre
 ) {
 }

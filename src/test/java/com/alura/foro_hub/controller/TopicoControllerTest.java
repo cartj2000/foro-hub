@@ -1,6 +1,8 @@
 package com.alura.foro_hub.controller;
 
 import com.alura.foro_hub.domain.topico.*;
+import com.alura.foro_hub.domain.usuario.Usuario;
+import com.alura.foro_hub.domain.usuario.UsuarioRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -36,7 +39,13 @@ class TopicoControllerTest {
     private JacksonTester<DatosDetalleTopico> datosDetalleTopicoJson;
 
     @MockBean
-    private TopicoRepository repository;
+    private TopicoRepository topicoRepository;
+
+    @MockBean
+    private UsuarioRepository usuarioRepository;
+
+    @MockBean
+    private CursoRepository cursoRepository;
 
     @Test
     @DisplayName("Deberia devolver http 400 cuando la request no tenga datos")
@@ -48,27 +57,21 @@ class TopicoControllerTest {
     }
 
     @Test
-    @DisplayName("Deberia devolver http 200 cuando la request reciba un json valido")
+    @DisplayName("Deberia devolver http 201 cuando los datos son válidos")
     @WithMockUser
     void registrar_escenario2() throws Exception {
-
-        var status = StatusTopico.ABIERTO;
-        var fecha = LocalDateTime.now();
         var datosRegistro = new DatosRegistroTopico(
                 "Bug inesperado",
                 "la consulta está mal referenciada",
                 1L,
                 1L
         );
-        when(repository.save(any())).thenReturn(new Topico(datosRegistro));
-        var response = mvc.perform(post("/topicos")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(datosRegistroTopicoJson.write(
-                                        datosRegistro
-                                ).getJson()
-                        )
-                )
-                .andReturn().getResponse();
+
+
+
+
+        var status = StatusTopico.ABIERTO;
+        var fecha = LocalDateTime.now();
         var datosDetalle = new DatosDetalleTopico(
                 null,
                 datosRegistro.titulo(),
@@ -81,8 +84,27 @@ class TopicoControllerTest {
         var jsonEsperado = datosDetalleTopicoJson.write(
                 datosDetalle
         ).getJson();
+
+
+        when(usuarioRepository.findById(any()))
+                .thenReturn(Optional.of(new Usuario(1L, "usuario", "123456", "Antony Queen")));
+
+
+        when(cursoRepository.findById(any()))
+                .thenReturn(Optional.of(new Curso(1L, "Spring Boot")));
+
+
+        when(topicoRepository.save(any())).thenReturn(new Topico(datosRegistro));
+        var response = mvc.perform(post("/topicos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(datosRegistroTopicoJson.write(datosRegistro).getJson()))
+                .andReturn().getResponse();
+
+
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(response.getContentAsString()).isEqualTo(jsonEsperado);
+
+
     }
 
 }

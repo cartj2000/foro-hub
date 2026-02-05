@@ -5,13 +5,13 @@ import com.alura.foro_hub.domain.usuario.Usuario;
 public record DatosDetalleUsuario(
         Long id,
         String login,
-        String contrasena
+        String nombre
 ) {
     public DatosDetalleUsuario(Usuario usuario){
         this(
                 usuario.getId(),
                 usuario.getLogin(),
-                usuario.getContrasena()
+                usuario.getNombre()
         );
     }
 

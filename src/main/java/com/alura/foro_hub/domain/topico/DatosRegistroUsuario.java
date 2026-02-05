@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public record DatosRegistroUsuario(
         @NotBlank String login,
-        @NotBlank String contrasena
+        @NotBlank String contrasena,
+        @NotBlank String nombre
 ) {
 }

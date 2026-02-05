@@ -25,14 +25,26 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, unique = true)
     private String login;
+    @Column(nullable = false)
     private String contrasena;
+    @Column(nullable = false)
+    private String nombre;
 
     public void actualizarInformaciones(@Valid DatosActualizacionUsuario datos) {
         if (datos.login() != null) {
             this.login = datos.login();
         }
+        if (datos.nombre() != null) {
+            this.nombre = datos.nombre();
+        }
     }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
