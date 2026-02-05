@@ -23,6 +23,7 @@ public class Topico {
     private Long id;
     private String titulo;
     private String mensaje;
+    @Column(nullable = false)
     private LocalDateTime fechaCreacion;
     @Enumerated(EnumType.STRING)
     private StatusTopico status = StatusTopico.ABIERTO;
@@ -55,6 +56,7 @@ public class Topico {
     }
 
     public void cerrar() {
+
         this.status = StatusTopico.CERRADO;
     }
 }

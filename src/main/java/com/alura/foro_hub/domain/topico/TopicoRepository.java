@@ -15,4 +15,12 @@ public interface TopicoRepository extends JpaRepository<Topico, Long> {
             from Topico t where t.status = 'ABIERTO' and t.id = :idTopico
             """)
     boolean isTopicoAbierto(Long idTopico);
+
+    @Query("""
+           select case when count(t) > 0 then true else false end
+           from Topico t
+           where t.id = :id
+           """)
+    boolean isPresent(Long id);
+
 }

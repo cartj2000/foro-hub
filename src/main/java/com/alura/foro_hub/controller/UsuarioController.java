@@ -37,7 +37,7 @@ public class UsuarioController {
         var usuario = new Usuario(datos);
         usuario.setContrasena(passwordEncoder.encode(datos.contrasena()));
         repository.save(usuario);
-        var uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+        var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
         return ResponseEntity.created(uri).body(new DatosDetalleUsuario(usuario));
     }
 

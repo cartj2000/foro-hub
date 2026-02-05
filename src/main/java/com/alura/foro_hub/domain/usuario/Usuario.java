@@ -2,6 +2,8 @@ package com.alura.foro_hub.domain.usuario;
 
 import com.alura.foro_hub.domain.topico.DatosActualizacionCurso;
 import com.alura.foro_hub.domain.topico.DatosActualizacionUsuario;
+import com.alura.foro_hub.domain.topico.DatosRegistroCurso;
+import com.alura.foro_hub.domain.topico.DatosRegistroUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -32,10 +34,13 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private String nombre;
 
+    public Usuario(DatosRegistroUsuario datos) {
+        this.login = datos.login();
+        this.nombre = datos.nombre();
+        this.contrasena = datos.contrasena();
+    }
+
     public void actualizarInformaciones(@Valid DatosActualizacionUsuario datos) {
-        if (datos.login() != null) {
-            this.login = datos.login();
-        }
         if (datos.nombre() != null) {
             this.nombre = datos.nombre();
         }

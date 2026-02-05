@@ -55,7 +55,8 @@ public class TopicoController {
     //public Page<DatosListaTopico> listar(@PageableDefault(page = 0, size = 10, sort = { "titulo" }) Pageable paginacion) {
     public ResponseEntity<Page<DatosListaTopico>> listar(@PageableDefault(size=10,sort={ "titulo" }) Pageable paginacion) {
         //return repository.findAllByStatus(paginacion).map(DatosListaTopico::new);
-        var page = repository.findAllByStatus(paginacion).map(DatosListaTopico::new);
+        //var page = repository.findAllByStatus(paginacion).map(DatosListaTopico::new);
+        var page = repository.findAll(paginacion).map(DatosListaTopico::new);
         return ResponseEntity.ok(page);
     }
 
@@ -63,7 +64,13 @@ public class TopicoController {
     @PutMapping
     //public void actualizar(@RequestBody @Valid DatosActualizacionTopico datos) {
     public ResponseEntity actualizar(@RequestBody @Valid DatosActualizacionTopico datos) {
-        var topico = repository.getReferenceById(datos.id());
+        var optionalTopico = repository.findById(datos.id());
+        //if (!repository.isPresent(datos.id())) {
+        if (!optionalTopico.isPresent()) {
+            throw new ValidacionException("Tópico no existe");
+        }
+        //var topico = repository.getReferenceById(datos.id());
+        var topico = optionalTopico.get();
         topico.actualizarInformaciones(datos);
         return ResponseEntity.ok(new DatosDetalleTopico(topico));
     }
@@ -72,9 +79,15 @@ public class TopicoController {
     @DeleteMapping("/{id}")
     //public void eliminar(@PathVariable Long id){
     public ResponseEntity eliminar(@PathVariable Long id){
+        var optionalTopico = repository.findById(id);
+        //if (!repository.isPresent(id)) {
+        if(!optionalTopico.isPresent()) {
+            throw new ValidacionException("Tópico no existe");
+        }
         //repository.deleteById(id);
-        var topico = repository.getReferenceById(id);
-        topico.cerrar();
+        repository.delete(optionalTopico.get());
+        //var topico = repository.getReferenceById(id);
+        //topico.cerrar();
         return ResponseEntity.noContent().build();
     }
 
