@@ -1,1 +1,0 @@
-alter table topicos add constraint unique titulo mensaje unique (titulo,mensaje);

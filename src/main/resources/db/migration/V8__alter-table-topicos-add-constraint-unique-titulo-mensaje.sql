@@ -1,0 +1,1 @@
+alter table topicos add constraint uk_topicos_titulo_mensaje unique (titulo,mensaje);
