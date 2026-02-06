@@ -1,5 +1,7 @@
-package com.alura.foro_hub.domain.topico;
+package com.alura.foro_hub.domain.topico.dto;
 
+
+import com.alura.foro_hub.domain.topico.Curso;
 
 public record DatosListaCurso(
     Long id,

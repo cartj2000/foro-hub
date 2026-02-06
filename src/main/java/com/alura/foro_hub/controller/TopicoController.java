@@ -2,6 +2,10 @@ package com.alura.foro_hub.controller;
 
 import com.alura.foro_hub.domain.ValidacionException;
 import com.alura.foro_hub.domain.topico.*;
+import com.alura.foro_hub.domain.topico.dto.DatosActualizacionTopico;
+import com.alura.foro_hub.domain.topico.dto.DatosDetalleTopico;
+import com.alura.foro_hub.domain.topico.dto.DatosListaTopico;
+import com.alura.foro_hub.domain.topico.dto.DatosRegistroTopico;
 import com.alura.foro_hub.domain.usuario.UsuarioRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;

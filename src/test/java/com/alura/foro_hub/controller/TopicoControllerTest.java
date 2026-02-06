@@ -1,6 +1,8 @@
 package com.alura.foro_hub.controller;
 
 import com.alura.foro_hub.domain.topico.*;
+import com.alura.foro_hub.domain.topico.dto.DatosDetalleTopico;
+import com.alura.foro_hub.domain.topico.dto.DatosRegistroTopico;
 import com.alura.foro_hub.domain.usuario.Usuario;
 import com.alura.foro_hub.domain.usuario.UsuarioRepository;
 import org.junit.jupiter.api.DisplayName;

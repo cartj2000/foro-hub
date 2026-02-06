@@ -1,5 +1,7 @@
 package com.alura.foro_hub.domain.topico;
 
+import com.alura.foro_hub.domain.topico.dto.DatosActualizacionTopico;
+import com.alura.foro_hub.domain.topico.dto.DatosRegistroTopico;
 import com.alura.foro_hub.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -21,11 +23,14 @@ public class Topico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String titulo;
+    @Column(nullable = false)
     private String mensaje;
     @Column(nullable = false)
     private LocalDateTime fechaCreacion;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private StatusTopico status = StatusTopico.ABIERTO;
 
     @ManyToOne

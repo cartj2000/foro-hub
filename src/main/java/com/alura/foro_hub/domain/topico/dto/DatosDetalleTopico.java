@@ -1,4 +1,7 @@
-package com.alura.foro_hub.domain.topico;
+package com.alura.foro_hub.domain.topico.dto;
+
+import com.alura.foro_hub.domain.topico.StatusTopico;
+import com.alura.foro_hub.domain.topico.Topico;
 
 import java.time.LocalDateTime;
 

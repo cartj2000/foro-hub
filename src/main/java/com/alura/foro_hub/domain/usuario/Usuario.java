@@ -1,9 +1,7 @@
 package com.alura.foro_hub.domain.usuario;
 
-import com.alura.foro_hub.domain.topico.DatosActualizacionCurso;
-import com.alura.foro_hub.domain.topico.DatosActualizacionUsuario;
-import com.alura.foro_hub.domain.topico.DatosRegistroCurso;
-import com.alura.foro_hub.domain.topico.DatosRegistroUsuario;
+import com.alura.foro_hub.domain.usuario.dto.DatosActualizacionUsuario;
+import com.alura.foro_hub.domain.usuario.dto.DatosRegistroUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -33,16 +31,23 @@ public class Usuario implements UserDetails {
     private String contrasena;
     @Column(nullable = false)
     private String nombre;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PerfilUsuario perfil;
 
     public Usuario(DatosRegistroUsuario datos) {
         this.login = datos.login();
         this.nombre = datos.nombre();
         this.contrasena = datos.contrasena();
+        this.perfil = datos.perfil();
     }
 
     public void actualizarInformaciones(@Valid DatosActualizacionUsuario datos) {
         if (datos.nombre() != null) {
             this.nombre = datos.nombre();
+        }
+        if (datos.perfil() != null) {
+            this.perfil = datos.perfil();
         }
     }
 
@@ -52,7 +57,8 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        //return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + perfil.name()));
     }
 
     @Override

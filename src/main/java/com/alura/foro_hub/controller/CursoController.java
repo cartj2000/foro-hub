@@ -1,6 +1,10 @@
 package com.alura.foro_hub.controller;
 
 import com.alura.foro_hub.domain.topico.*;
+import com.alura.foro_hub.domain.topico.dto.DatosActualizacionCurso;
+import com.alura.foro_hub.domain.topico.dto.DatosDetalleCurso;
+import com.alura.foro_hub.domain.topico.dto.DatosListaCurso;
+import com.alura.foro_hub.domain.topico.dto.DatosRegistroCurso;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

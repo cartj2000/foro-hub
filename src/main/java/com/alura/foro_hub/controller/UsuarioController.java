@@ -1,8 +1,11 @@
 package com.alura.foro_hub.controller;
 
-import com.alura.foro_hub.domain.topico.*;
 import com.alura.foro_hub.domain.usuario.Usuario;
 import com.alura.foro_hub.domain.usuario.UsuarioRepository;
+import com.alura.foro_hub.domain.usuario.dto.DatosActualizacionUsuario;
+import com.alura.foro_hub.domain.usuario.dto.DatosDetalleUsuario;
+import com.alura.foro_hub.domain.usuario.dto.DatosListaUsuario;
+import com.alura.foro_hub.domain.usuario.dto.DatosRegistroUsuario;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
