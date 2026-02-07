@@ -39,8 +39,8 @@ public class CursoController {
     }
 
     @GetMapping
-    //public Page<DatosListaCurso> listar(@PageableDefault(page = 0, size = 10, sort = { "curso" }) Pageable paginacion) {
-    public ResponseEntity<Page<DatosListaCurso>> listar(@PageableDefault(size=10,sort={ "curso" }) Pageable paginacion) {
+    //public Page<DatosListaCurso> listar(@PageableDefault(page = 0, size = 10, sort = { "nombre" }) Pageable paginacion) {
+    public ResponseEntity<Page<DatosListaCurso>> listar(@PageableDefault(size=10,sort={ "nombre" }) Pageable paginacion) {
         //return repository.findAll(paginacion).map(DatosListaCurso::new);
         var page = repository.findAll(paginacion).map(DatosListaCurso::new);
         return ResponseEntity.ok(page);

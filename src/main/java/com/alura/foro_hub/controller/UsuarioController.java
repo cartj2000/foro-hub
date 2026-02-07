@@ -38,6 +38,7 @@ public class UsuarioController {
         //System.out.println(datos);
         //repository.save(new Usuario(datos));
         var usuario = new Usuario(datos);
+        //febrero 6 2026
         usuario.setContrasena(passwordEncoder.encode(datos.contrasena()));
         repository.save(usuario);
         var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
@@ -45,8 +46,8 @@ public class UsuarioController {
     }
 
     @GetMapping
-    //public Page<DatosListaUsuario> listar(@PageableDefault(page = 0, size = 10, sort = { "usuario" }) Pageable paginacion) {
-    public ResponseEntity<Page<DatosListaUsuario>> listar(@PageableDefault(size=10,sort={ "usuario" }) Pageable paginacion) {
+    //public Page<DatosListaUsuario> listar(@PageableDefault(page = 0, size = 10, sort = { "nombre" }) Pageable paginacion) {
+    public ResponseEntity<Page<DatosListaUsuario>> listar(@PageableDefault(size=10,sort={ "nombre" }) Pageable paginacion) {
         //return repository.findAll(paginacion).map(DatosListaUsuario::new);
         var page = repository.findAll(paginacion).map(DatosListaUsuario::new);
         return ResponseEntity.ok(page);

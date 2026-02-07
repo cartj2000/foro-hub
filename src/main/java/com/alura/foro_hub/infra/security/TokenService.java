@@ -23,7 +23,7 @@ public class TokenService {
             //var algoritmo = Algorithm.HMAC256("12345678");
             var algoritmo = Algorithm.HMAC256(secret);
             return JWT.create()
-                    .withIssuer("API foro_hub.alura")
+                    .withIssuer("FORO_HUB alura.com")
                     .withSubject(usuario.getLogin())
                     .withExpiresAt(FechaExpiracion())
                     //.withClaim("id",usuario.getId())
@@ -44,7 +44,7 @@ public class TokenService {
             var algoritmo = Algorithm.HMAC256(secret);
             return JWT.require(algoritmo)
                     // specify any specific claim validations
-                    .withIssuer("API foro_hub.alura")
+                    .withIssuer("FORO_HUB alura.com")
                     // reusable verifier instance
                     .build()
                     .verify(tokenJWT)
