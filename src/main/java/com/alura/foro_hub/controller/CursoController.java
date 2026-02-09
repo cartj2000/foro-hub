@@ -1,5 +1,6 @@
 package com.alura.foro_hub.controller;
 
+import com.alura.foro_hub.domain.ValidacionException;
 import com.alura.foro_hub.domain.topico.*;
 import com.alura.foro_hub.domain.topico.dto.DatosActualizacionCurso;
 import com.alura.foro_hub.domain.topico.dto.DatosDetalleCurso;
@@ -42,6 +43,7 @@ public class CursoController {
     //public Page<DatosListaCurso> listar(@PageableDefault(page = 0, size = 10, sort = { "nombre" }) Pageable paginacion) {
     public ResponseEntity<Page<DatosListaCurso>> listar(@PageableDefault(size=10,sort={ "nombre" }) Pageable paginacion) {
         //return repository.findAll(paginacion).map(DatosListaCurso::new);
+        //
         var page = repository.findAll(paginacion).map(DatosListaCurso::new);
         return ResponseEntity.ok(page);
     }
@@ -50,7 +52,13 @@ public class CursoController {
     @PutMapping
     //public void actualizar(@RequestBody @Valid DatosActualizacionCurso datos) {
     public ResponseEntity actualizar(@RequestBody @Valid DatosActualizacionCurso datos) {
-        var curso = repository.getReferenceById(datos.id());
+        var optionalCurso = repository.findById(datos.id());
+        //if (!repository.isPresent(datos.id())) {
+        if (!optionalCurso.isPresent()) {
+            throw new ValidacionException("Curso no existe");
+        }
+        //var curso = repository.getReferenceById(datos.id());
+        var curso = optionalCurso.get();
         curso.actualizarInformaciones(datos);
         return ResponseEntity.ok(new DatosDetalleCurso(curso));
     }
@@ -59,7 +67,13 @@ public class CursoController {
     @DeleteMapping("/{id}")
     //public void eliminar(@PathVariable Long id){
     public ResponseEntity eliminar(@PathVariable Long id){
-        repository.deleteById(id);
+        var optionalCurso = repository.findById(id);
+        //if (!repository.isPresent(id)) {
+        if(!optionalCurso.isPresent()) {
+            throw new ValidacionException("Curso no existe");
+        }
+        //repository.deleteById(id);
+        repository.delete(optionalCurso.get());
         return ResponseEntity.noContent().build();
     }
 
@@ -67,7 +81,9 @@ public class CursoController {
     //public void detallar(@PathVariable  Long id){
     public ResponseEntity detallar(@PathVariable  Long id){
         //repository.findById(id);
-        var curso = repository.getReferenceById(id);
+        //var curso = repository.getReferenceById(id);
+        var curso = repository.findById(id)
+                .orElseThrow(() -> new ValidacionException("Curso no existe"));
         return ResponseEntity.ok(new DatosDetalleCurso(curso));
     }
 

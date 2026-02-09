@@ -91,7 +91,7 @@ public class TopicoController {
         //repository.deleteById(id);
         repository.delete(optionalTopico.get());
         //var topico = repository.getReferenceById(id);
-        //topico.cerrar();
+        //topico.solucionar();
         return ResponseEntity.noContent().build();
     }
 
@@ -99,7 +99,9 @@ public class TopicoController {
     //public void detallar(@PathVariable  Long id){
     public ResponseEntity detallar(@PathVariable  Long id){
         //repository.getReferenceById(id);
-        var topico = repository.getReferenceById(id);
+        //var topico = repository.getReferenceById(id);
+        var topico = repository.findById(id)
+                .orElseThrow(() -> new ValidacionException("Topico no existe"));
         return ResponseEntity.ok(new DatosDetalleTopico(topico));
     }
 

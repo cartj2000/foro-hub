@@ -1,5 +1,6 @@
 package com.alura.foro_hub.controller;
 
+import com.alura.foro_hub.domain.ValidacionException;
 import com.alura.foro_hub.domain.usuario.Usuario;
 import com.alura.foro_hub.domain.usuario.UsuarioRepository;
 import com.alura.foro_hub.domain.usuario.dto.DatosActualizacionUsuario;
@@ -49,6 +50,7 @@ public class UsuarioController {
     //public Page<DatosListaUsuario> listar(@PageableDefault(page = 0, size = 10, sort = { "nombre" }) Pageable paginacion) {
     public ResponseEntity<Page<DatosListaUsuario>> listar(@PageableDefault(size=10,sort={ "nombre" }) Pageable paginacion) {
         //return repository.findAll(paginacion).map(DatosListaUsuario::new);
+        //
         var page = repository.findAll(paginacion).map(DatosListaUsuario::new);
         return ResponseEntity.ok(page);
     }
@@ -57,7 +59,13 @@ public class UsuarioController {
     @PutMapping
     //public void actualizar(@RequestBody @Valid DatosActualizacionUsuario datos) {
     public ResponseEntity actualizar(@RequestBody @Valid DatosActualizacionUsuario datos) {
-        var usuario = repository.getReferenceById(datos.id());
+        var optionalUsuario = repository.findById(datos.id());
+        //if (!repository.isPresent(datos.id())) {
+        if (!optionalUsuario.isPresent()) {
+            throw new ValidacionException("Usuario no existe");
+        }
+        //var usuario = repository.getReferenceById(datos.id());
+        var usuario = optionalUsuario.get();
         usuario.actualizarInformaciones(datos);
         return ResponseEntity.ok(new DatosDetalleUsuario(usuario));
     }
@@ -66,7 +74,13 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     //public void eliminar(@PathVariable Long id){
     public ResponseEntity eliminar(@PathVariable Long id){
-        repository.deleteById(id);
+        var optionalUsuario = repository.findById(id);
+        //if (!repository.isPresent(id)) {
+        if(!optionalUsuario.isPresent()) {
+            throw new ValidacionException("Usuario no existe");
+        }
+        //repository.deleteById(id);
+        repository.delete(optionalUsuario.get());
         return ResponseEntity.noContent().build();
     }
 
@@ -74,7 +88,9 @@ public class UsuarioController {
     //public void detallar(@PathVariable  Long id){
     public ResponseEntity detallar(@PathVariable  Long id){
         //repository.findById(id);
-        var usuario = repository.getReferenceById(id);
+        //var usuario = repository.getReferenceById(id);
+        var usuario = repository.findById(id)
+                .orElseThrow(() -> new ValidacionException("Usuario no existe"));
         return ResponseEntity.ok(new DatosDetalleUsuario(usuario));
     }
 

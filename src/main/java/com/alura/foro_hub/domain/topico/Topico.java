@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name = "topicos",uniqueConstraints =
 @UniqueConstraint(columnNames = {"titulo","mensaje"}))
@@ -40,6 +41,9 @@ public class Topico {
     @ManyToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
+
+    @OneToMany(mappedBy =  "topico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Respuesta> respuestas;
 
     public Topico(DatosRegistroTopico datos, Usuario autor, Curso curso) {
         this.id = null;

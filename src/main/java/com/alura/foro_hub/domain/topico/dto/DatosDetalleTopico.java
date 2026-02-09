@@ -21,7 +21,7 @@ public record DatosDetalleTopico(
                 topico.getMensaje(),
                 topico.getFechaCreacion(),
                 topico.getStatus(),
-                topico.getAutor().getLogin(),
+                topico.getAutor().getNombre(),
                 topico.getCurso().getNombre()
         );
     }

@@ -8,6 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     UserDetails findByLogin(String login);
-//    Page<Usuario> findById(Long IdUsuario, Pageable paginacion);
+    Page<Usuario> findById(Long IdUsuario, Pageable paginacion);
 
 }
