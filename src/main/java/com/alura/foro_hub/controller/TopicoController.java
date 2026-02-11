@@ -56,8 +56,8 @@ public class TopicoController {
     }
 
     @GetMapping
-    //public Page<DatosListaTopico> listar(@PageableDefault(page = 0, size = 10, sort = { "titulo" }) Pageable paginacion) {
-    public ResponseEntity<Page<DatosListaTopico>> listar(@PageableDefault(size=10,sort={ "titulo" }) Pageable paginacion) {
+    //public Page<DatosListaTopico> listar(@PageableDefault(page = 0, size = 10, sort = { "fechaCreacion" }) Pageable paginacion) {
+    public ResponseEntity<Page<DatosListaTopico>> listar(@PageableDefault(size=10,sort={ "fechaCreacion" }) Pageable paginacion) {
         //return repository.findAllByStatus(paginacion).map(DatosListaTopico::new);
         //var page = repository.findAllByStatus(paginacion).map(DatosListaTopico::new);
         var page = repository.findAll(paginacion).map(DatosListaTopico::new);
@@ -65,16 +65,31 @@ public class TopicoController {
     }
 
     @Transactional
-    @PutMapping
+    @PutMapping("/{id}")
     //public void actualizar(@RequestBody @Valid DatosActualizacionTopico datos) {
-    public ResponseEntity actualizar(@RequestBody @Valid DatosActualizacionTopico datos) {
-        var optionalTopico = repository.findById(datos.id());
+    //public ResponseEntity actualizar(@RequestBody @Valid DatosActualizacionTopico datos) {
+    public ResponseEntity<DatosDetalleTopico> actualizar(@PathVariable Long id, @RequestBody @Valid DatosActualizacionTopico datos) {
+        //var optionalTopico = repository.findById(datos.id());
+        var optionalTopico = repository.findById(id);
         //if (!repository.isPresent(datos.id())) {
         if (!optionalTopico.isPresent()) {
             throw new ValidacionException("Tópico no existe");
         }
+
         //var topico = repository.getReferenceById(datos.id());
+        //var topico = repository.findById(id)
+        //        .orElseThrow(() -> new ValidacionException("Topico no existe"));
+
         var topico = optionalTopico.get();
+
+        // si cambian los datos validar duplicado:
+        if (!topico.getTitulo().equals(datos.titulo()) ||
+                !topico.getMensaje().equals(datos.mensaje())) {
+
+            if (repository.existsByTituloAndMensaje(datos.titulo(), datos.mensaje())) {
+                throw new ValidacionException("Tópico duplicado");
+            }
+        }
         topico.actualizarInformaciones(datos);
         return ResponseEntity.ok(new DatosDetalleTopico(topico));
     }
@@ -88,8 +103,8 @@ public class TopicoController {
         if(!optionalTopico.isPresent()) {
             throw new ValidacionException("Tópico no existe");
         }
-        //repository.deleteById(id);
-        repository.delete(optionalTopico.get());
+        //repository.delete(optionalTopico.get());
+        repository.deleteById(id);
         //var topico = repository.getReferenceById(id);
         //topico.solucionar();
         return ResponseEntity.noContent().build();

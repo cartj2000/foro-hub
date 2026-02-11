@@ -72,8 +72,8 @@ public class CursoController {
         if(!optionalCurso.isPresent()) {
             throw new ValidacionException("Curso no existe");
         }
-        //repository.deleteById(id);
-        repository.delete(optionalCurso.get());
+        //repository.delete(optionalCurso.get());
+        repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 

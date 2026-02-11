@@ -58,8 +58,8 @@ public class RespuestaController {
     }
 
     @GetMapping
-    //public Page<DatosListaRespuesta> listar(@PageableDefault(page = 0, size = 10, sort = { "mensaje" }) Pageable paginacion) {
-    public ResponseEntity<Page<DatosListaRespuesta>> listar(@PageableDefault(size=10,sort={ "mensaje" }) Pageable paginacion) {
+    //public Page<DatosListaRespuesta> listar(@PageableDefault(page = 0, size = 10, sort = { "fechaCreacion" }) Pageable paginacion) {
+    public ResponseEntity<Page<DatosListaRespuesta>> listar(@PageableDefault(size=10,sort={ "fechaCreacion" }) Pageable paginacion) {
         //return repository.findAllByStatus(paginacion).map(DatosListaRespuesta::new);
         //var page = repository.findAllByStatus(paginacion).map(DatosListaRespuesta::new);
         var page = repository.findAll(paginacion).map(DatosListaRespuesta::new);
@@ -90,8 +90,8 @@ public class RespuestaController {
         if(!optionalRespuesta.isPresent()) {
             throw new ValidacionException("Respuesta no existe");
         }
-        //repository.deleteById(id);
-        repository.delete(optionalRespuesta.get());
+        //repository.delete(optionalRespuesta.get());
+        repository.deleteById(id);
         //var respuesta = repository.getReferenceById(id);
         //respuesta.solucionar();
         return ResponseEntity.noContent().build();

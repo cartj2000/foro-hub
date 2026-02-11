@@ -79,8 +79,8 @@ public class UsuarioController {
         if(!optionalUsuario.isPresent()) {
             throw new ValidacionException("Usuario no existe");
         }
-        //repository.deleteById(id);
-        repository.delete(optionalUsuario.get());
+        //repository.delete(optionalUsuario.get());
+        repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
