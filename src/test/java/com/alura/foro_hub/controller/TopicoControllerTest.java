@@ -3,6 +3,7 @@ package com.alura.foro_hub.controller;
 import com.alura.foro_hub.domain.topico.*;
 import com.alura.foro_hub.domain.topico.dto.DatosDetalleTopico;
 import com.alura.foro_hub.domain.topico.dto.DatosRegistroTopico;
+import com.alura.foro_hub.domain.usuario.PerfilUsuario;
 import com.alura.foro_hub.domain.usuario.Usuario;
 import com.alura.foro_hub.domain.usuario.UsuarioRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -27,6 +29,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
 class TopicoControllerTest {
@@ -69,7 +72,17 @@ class TopicoControllerTest {
                 1L
         );
 
+        var usuario = new Usuario(
+                1L,
+                "usuario",
+                "123456",
+                "Antony Queen",
+                PerfilUsuario.ALUMNO
+        );
 
+        var curso = new Curso(1L, "Spring Boot");
+
+        var topico = new Topico(datosRegistro, usuario, curso);
 
 
         var status = StatusTopico.ACEPTADO;
@@ -80,8 +93,8 @@ class TopicoControllerTest {
                 datosRegistro.mensaje(),
                 fecha,
                 status,
-                1L,
-                1L
+                "jessica parker",
+                "Spring boot"
         );
         var jsonEsperado = datosDetalleTopicoJson.write(
                 datosDetalle
@@ -89,14 +102,14 @@ class TopicoControllerTest {
 
 
         when(usuarioRepository.findById(any()))
-                .thenReturn(Optional.of(new Usuario(1L, "usuario", "123456", "Antony Queen")));
+                .thenReturn(Optional.of(usuario));
 
 
         when(cursoRepository.findById(any()))
-                .thenReturn(Optional.of(new Curso(1L, "Spring Boot")));
+                .thenReturn(Optional.of(curso));
 
 
-        when(topicoRepository.save(any())).thenReturn(new Topico(datosRegistro));
+        when(topicoRepository.save(any())).thenReturn(topico);
         var response = mvc.perform(post("/topicos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(datosRegistroTopicoJson.write(datosRegistro).getJson()))

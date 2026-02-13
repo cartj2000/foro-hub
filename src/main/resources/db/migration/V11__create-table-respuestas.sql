@@ -3,7 +3,7 @@ create table respuestas(
     mensaje varchar(255) not null,
     topico_id bigint not null,
     fecha_de_creacion datetime not null,
-    status varchar(15) not null default 'SOLUCIONADO',
+    status varchar(15) not null default 'PROCESADA',
     usuario_id bigint not null,
     primary key(id),
     constraint uk_respuestas_mensaje_topico unique (mensaje,topico_id),
