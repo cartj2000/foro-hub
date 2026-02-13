@@ -56,8 +56,8 @@ public class TopicoController {
     }
 
     @GetMapping
-    //public Page<DatosListaTopico> listar(@PageableDefault(page = 0, size = 10, sort = { "fechaCreacion" }) Pageable paginacion) {
-    public ResponseEntity<Page<DatosListaTopico>> listar(@PageableDefault(size=10,sort={ "fechaCreacion" }) Pageable paginacion) {
+    //public Page<DatosListaTopico> listar(@PageableDefault(page = 0, size = 10, sort = { "fechaDeCreacion" }) Pageable paginacion) {
+    public ResponseEntity<Page<DatosListaTopico>> listar(@PageableDefault(size=10,sort={ "fechaDeCreacion" }) Pageable paginacion) {
         //return repository.findAllByStatus(paginacion).map(DatosListaTopico::new);
         //var page = repository.findAllByStatus(paginacion).map(DatosListaTopico::new);
         var page = repository.findAll(paginacion).map(DatosListaTopico::new);

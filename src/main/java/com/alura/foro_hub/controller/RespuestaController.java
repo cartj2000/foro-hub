@@ -58,8 +58,8 @@ public class RespuestaController {
     }
 
     @GetMapping
-    //public Page<DatosListaRespuesta> listar(@PageableDefault(page = 0, size = 10, sort = { "fechaCreacion" }) Pageable paginacion) {
-    public ResponseEntity<Page<DatosListaRespuesta>> listar(@PageableDefault(size=10,sort={ "fechaCreacion" }) Pageable paginacion) {
+    //public Page<DatosListaRespuesta> listar(@PageableDefault(page = 0, size = 10, sort = { "fechaDeCreacion" }) Pageable paginacion) {
+    public ResponseEntity<Page<DatosListaRespuesta>> listar(@PageableDefault(size=10,sort={ "fechaDeCreacion" }) Pageable paginacion) {
         //return repository.findAllByStatus(paginacion).map(DatosListaRespuesta::new);
         //var page = repository.findAllByStatus(paginacion).map(DatosListaRespuesta::new);
         var page = repository.findAll(paginacion).map(DatosListaRespuesta::new);
@@ -67,16 +67,31 @@ public class RespuestaController {
     }
 
     @Transactional
-    @PutMapping
+    @PutMapping("/{id}")
     //public void actualizar(@RequestBody @Valid DatosActualizacionRespuesta datos) {
-    public ResponseEntity actualizar(@RequestBody @Valid DatosActualizacionRespuesta datos) {
-        var optionalRespuesta = repository.findById(datos.id());
+    //public ResponseEntity actualizar(@RequestBody @Valid DatosActualizacionRespuesta datos) {
+    public ResponseEntity<DatosDetalleRespuesta> actualizar(@PathVariable Long id, @RequestBody @Valid DatosActualizacionRespuesta datos) {
+        //var optionalRespuesta = repository.findById(datos.id());
+        var optionalRespuesta = repository.findById(id);
         //if (!repository.isPresent(datos.id())) {
         if (!optionalRespuesta.isPresent()) {
             throw new ValidacionException("Respuesta no existe");
         }
+
         //var respuesta = repository.getReferenceById(datos.id());
+
+
+
         var respuesta = optionalRespuesta.get();
+
+        // si cambian los datos validar duplicado:
+        if (
+                !respuesta.getMensaje().equals(datos.mensaje())) {
+
+            if (repository.existsByMensaje(datos.mensaje())) {
+                throw new ValidacionException("Respuesta duplicada");
+            }
+        }
         respuesta.actualizarInformaciones(datos);
         return ResponseEntity.ok(new DatosDetalleRespuesta(respuesta));
     }

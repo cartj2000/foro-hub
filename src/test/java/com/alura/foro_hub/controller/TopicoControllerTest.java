@@ -72,7 +72,7 @@ class TopicoControllerTest {
 
 
 
-        var status = StatusTopico.ABIERTO;
+        var status = StatusTopico.ACEPTADO;
         var fecha = LocalDateTime.now();
         var datosDetalle = new DatosDetalleTopico(
                 null,

@@ -30,10 +30,10 @@ public class Respuesta {
     @JoinColumn(name = "topico_id")
     private Topico topico;
     @Column(nullable = false)
-    private LocalDateTime fechaCreacion;
+    private LocalDateTime fechaDeCreacion;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private StatusRespuesta status = StatusRespuesta.SOLUCIONADO;
+    private StatusRespuesta status = StatusRespuesta.PROCESADA;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
@@ -43,8 +43,8 @@ public class Respuesta {
         this.id = null;
         this.mensaje = datos.mensaje();
         this.topico = topico;
-        this.fechaCreacion = LocalDateTime.now();
-        this.status = StatusRespuesta.SOLUCIONADO;
+        this.fechaDeCreacion = LocalDateTime.now();
+        this.status = StatusRespuesta.PROCESADA;
         this.usuario = usuario;
     }
 
@@ -54,8 +54,7 @@ public class Respuesta {
         }
     }
 
-    public void solucionar() {
-
-        this.status = StatusRespuesta.SOLUCIONADO;
+    public void procesar() {
+        this.status = StatusRespuesta.PROCESADA;
     }
 }

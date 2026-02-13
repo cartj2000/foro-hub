@@ -9,7 +9,7 @@ public record DatosListaRespuesta(
     Long id,
     String mensaje,
     String topico,
-    LocalDateTime fechaCreacion,
+    LocalDateTime fechaDeCreacion,
     StatusRespuesta status,
     String usuario
     ) {
@@ -18,7 +18,7 @@ public record DatosListaRespuesta(
                 respuesta.getId(),
                 respuesta.getMensaje(),
                 respuesta.getTopico().getMensaje(),
-                respuesta.getFechaCreacion(),
+                respuesta.getFechaDeCreacion(),
                 respuesta.getStatus(),
                 respuesta.getUsuario().getNombre()
 

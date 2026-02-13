@@ -1,6 +1,8 @@
 package com.alura.foro_hub.domain.topico;
 
 public enum StatusRespuesta {
-    SOLUCIONADO,
-    REESTRUCTURADO
+    PROCESADA,
+    VALIDADA,
+    DESCONTEXTUALIZADA,
+    REESTRUCTURADA
 }

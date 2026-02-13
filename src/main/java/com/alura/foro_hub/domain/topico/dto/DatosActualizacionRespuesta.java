@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record DatosActualizacionRespuesta(
         @NotNull Long id,
-        @NotBlank String mensaje,
-        @NotNull StatusRespuesta status
+        @NotBlank String mensaje
 ) {
 }

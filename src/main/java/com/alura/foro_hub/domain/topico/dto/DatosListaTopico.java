@@ -9,7 +9,7 @@ public record DatosListaTopico(
     Long id,
     String titulo,
     String mensaje,
-    LocalDateTime fechaCreacion,
+    LocalDateTime fechaDeCreacion,
     StatusTopico status,
     String autor,
     String curso
@@ -20,7 +20,7 @@ public record DatosListaTopico(
                 topico.getId(),
                 topico.getTitulo(),
                 topico.getMensaje(),
-                topico.getFechaCreacion(),
+                topico.getFechaDeCreacion(),
                 topico.getStatus(),
                 topico.getAutor().getNombre(),
                 topico.getCurso().getNombre()

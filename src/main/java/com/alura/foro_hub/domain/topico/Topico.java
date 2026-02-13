@@ -29,10 +29,10 @@ public class Topico {
     @Column(nullable = false)
     private String mensaje;
     @Column(nullable = false)
-    private LocalDateTime fechaCreacion;
+    private LocalDateTime fechaDeCreacion;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private StatusTopico status = StatusTopico.ABIERTO;
+    private StatusTopico status = StatusTopico.ACEPTADO;
 
     @ManyToOne
     @JoinColumn(name = "autor_id")
@@ -49,10 +49,10 @@ public class Topico {
         this.id = null;
         this.titulo = datos.titulo();
         this.mensaje = datos.mensaje();
-        this.fechaCreacion = LocalDateTime.now();
+        this.fechaDeCreacion = LocalDateTime.now();
         this.autor = autor;
         this.curso = curso;
-        this.status = StatusTopico.ABIERTO;
+        this.status = StatusTopico.ACEPTADO;
     }
 
     public void actualizarInformaciones(@Valid DatosActualizacionTopico datos) {
@@ -64,8 +64,8 @@ public class Topico {
         }
     }
 
-    public void cerrar() {
+    public void solucionar() {
 
-        this.status = StatusTopico.CERRADO;
+        this.status = StatusTopico.SOLUCIONADO;
     }
 }

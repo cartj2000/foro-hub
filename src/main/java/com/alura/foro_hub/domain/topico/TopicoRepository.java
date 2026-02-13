@@ -14,9 +14,9 @@ Page<Topico> findById(Long IdTopico, Pageable paginacion);
 
     @Query("""
             select count(t) > 0
-            from Topico t where t.status = 'ABIERTO' and t.id = :idTopico
+            from Topico t where t.status = 'ACEPTADO' and t.id = :idTopico
             """)
-    boolean isTopicoAbierto(Long idTopico);
+    boolean isTopicoAceptado(Long idTopico);
 
     @Query("""
            select case when count(t) > 0 then true else false end
