@@ -21,6 +21,7 @@ import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,7 +31,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -66,7 +67,16 @@ class TopicoControllerTest {
     //private JacksonTester<DatosDetalleTopico> datosDetalleTopicoJson;
 
     @MockBean
+    private PasswordEncoder passwordEncoder;
+
+    @MockBean
+    private TokenService tokenService;
+
+    @MockBean
     private TopicoRepository topicoRepository;
+
+    @MockBean
+    private RespuestaRepository respuestaRepository;
 
     @MockBean
     private UsuarioRepository usuarioRepository;
@@ -74,15 +84,9 @@ class TopicoControllerTest {
     @MockBean
     private CursoRepository cursoRepository;
 
-    @MockBean
-    private TokenService tokenService;
-
-    @MockBean
-    private RespuestaRepository respuestaRepository;
-
     @Test
     @DisplayName("Deberia devolver http 400 cuando la request no tenga datos")
-    //@WithMockUser
+    @WithMockUser
     void topicoSinBody_debeRetornar400() throws Exception {
 
         var responseTopico = mvc.perform(post("/topicos"))
@@ -92,7 +96,7 @@ class TopicoControllerTest {
 
     @Test
     @DisplayName("Deberia devolver http 400 cuando la request no tenga datos")
-    //@WithMockUser
+    @WithMockUser
     void respuestaSinBody_debeRetornar400() throws Exception {
 
         var responseRespuesta = mvc.perform(post("/respuestas"))
@@ -102,7 +106,7 @@ class TopicoControllerTest {
 
     @Test
     @DisplayName("Deberia devolver http 400 cuando la request no tenga datos")
-    //@WithMockUser
+    @WithMockUser
     void usuarioSinBody_debeRetornar400() throws Exception {
 
         var responseUsuario = mvc.perform(post("/usuarios"))
@@ -112,7 +116,7 @@ class TopicoControllerTest {
 
     @Test
     @DisplayName("Deberia devolver http 400 cuando la request no tenga datos")
-    //@WithMockUser
+    @WithMockUser
     void cursoSinBody_debeRetornar400() throws Exception {
 
         var responseCurso = mvc.perform(post("/cursos"))
@@ -122,7 +126,7 @@ class TopicoControllerTest {
 
     @Test
     @DisplayName("Deberia devolver http 201 cuando los datos son válidos")
-    //@WithMockUser
+    @WithMockUser
     void registrar_topico_debeRetornar201() throws Exception {
 
         var datosRegistroTopico = new DatosRegistroTopico(
@@ -170,7 +174,9 @@ class TopicoControllerTest {
         when(cursoRepository.findById(any()))
                 .thenReturn(Optional.of(cursoEjemplo));
 
-        when(topicoRepository.save(any())).thenReturn(entidadTopico);
+        when(topicoRepository.save(any()))
+                .thenReturn(entidadTopico);
+
         var responseTopico = mvc.perform(post("/topicos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(datosRegistroTopicoJson.write(datosRegistroTopico).getJson()))
@@ -182,7 +188,7 @@ class TopicoControllerTest {
 
     @Test
     @DisplayName("Deberia devolver http 201 cuando los datos son válidos")
-    //@WithMockUser
+    @WithMockUser
     void registrar_respuesta_debeRetornar201() throws Exception {
 
         var datosRegistroTopico = new DatosRegistroTopico(
@@ -215,14 +221,18 @@ class TopicoControllerTest {
 
         var entidadRespuesta = new Respuesta(datosRegistroRespuesta, entidadTopico, usuarioEjemplo);
 
+        when(respuestaRepository.existsByMensajeAndTopico_Id(anyString(), anyLong()))
+                .thenReturn(false);
+
+        when(topicoRepository.findById(any()))
+                .thenReturn(Optional.of(entidadTopico));
+
         when(usuarioRepository.findById(any()))
                 .thenReturn(Optional.of(usuarioEjemplo));
 
-        when(cursoRepository.findById(any()))
-                .thenReturn(Optional.of(cursoEjemplo));
+        when(respuestaRepository.save(any()))
+                .thenReturn(entidadRespuesta);
 
-
-        when(respuestaRepository.save(any())).thenReturn(entidadRespuesta);
         var responseRespuesta = mvc.perform(post("/respuestas")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(datosRegistroRespuestaJson.write(datosRegistroRespuesta).getJson()))
@@ -233,7 +243,7 @@ class TopicoControllerTest {
 
     @Test
     @DisplayName("Deberia devolver http 201 cuando los datos son válidos")
-    //@WithMockUser
+    @WithMockUser
     void registrar_usuario_debeRetornar201() throws Exception {
 
         var datosRegistroUsuario = new DatosRegistroUsuario(
@@ -256,7 +266,9 @@ class TopicoControllerTest {
         when(usuarioRepository.findById(any()))
                 .thenReturn(Optional.of(usuarioEjemplo));
 
-        when(usuarioRepository.save(any())).thenReturn(entidadUsuario);
+        when(usuarioRepository.save(any()))
+                .thenReturn(entidadUsuario);
+
         var responseUsuario = mvc.perform(post("/usuarios")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(datosRegistroUsuarioJson.write(datosRegistroUsuario).getJson()))
@@ -267,7 +279,7 @@ class TopicoControllerTest {
 
     @Test
     @DisplayName("Deberia devolver http 201 cuando los datos son válidos")
-    //@WithMockUser
+    @WithMockUser
     void registrar_curso_debeRetornar201() throws Exception {
 
         var datosRegistroCurso = new DatosRegistroCurso(
@@ -284,8 +296,9 @@ class TopicoControllerTest {
         when(cursoRepository.findById(any()))
                 .thenReturn(Optional.of(cursoEjemplo));
 
+        when(cursoRepository.save(any()))
+                .thenReturn(entidadCurso);
 
-        when(cursoRepository.save(any())).thenReturn(entidadCurso);
         var responseCurso = mvc.perform(post("/cursos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(datosRegistroCursoJson.write(datosRegistroCurso).getJson()))
