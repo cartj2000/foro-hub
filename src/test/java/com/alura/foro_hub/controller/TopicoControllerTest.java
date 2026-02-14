@@ -36,7 +36,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 //@SpringBootTest
 @ActiveProfiles("test")
-@WebMvcTest(TopicoController.class, UsuarioController.class, CursoController.class, RespuestaController.class)
+@WebMvcTest({
+        TopicoController.class,
+        UsuarioController.class,
+        CursoController.class,
+        RespuestaController.class
+})
 //@AutoConfigureMockMvc
 @AutoConfigureMockMvc(addFilters = false)
 @AutoConfigureJsonTesters
@@ -78,24 +83,41 @@ class TopicoControllerTest {
     @Test
     @DisplayName("Deberia devolver http 400 cuando la request no tenga datos")
     //@WithMockUser
-    void registrar_escenario1() throws Exception {
+    void topicoSinBody_debeRetornar400() throws Exception {
 
         var responseTopico = mvc.perform(post("/topicos"))
                 .andReturn().getResponse();
         assertThat(responseTopico.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    @DisplayName("Deberia devolver http 400 cuando la request no tenga datos")
+    //@WithMockUser
+    void respuestaSinBody_debeRetornar400() throws Exception {
 
         var responseRespuesta = mvc.perform(post("/respuestas"))
                 .andReturn().getResponse();
         assertThat(responseRespuesta.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    @DisplayName("Deberia devolver http 400 cuando la request no tenga datos")
+    //@WithMockUser
+    void usuarioSinBody_debeRetornar400() throws Exception {
 
         var responseUsuario = mvc.perform(post("/usuarios"))
                 .andReturn().getResponse();
         assertThat(responseUsuario.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    @DisplayName("Deberia devolver http 400 cuando la request no tenga datos")
+    //@WithMockUser
+    void cursoSinBody_debeRetornar400() throws Exception {
 
         var responseCurso = mvc.perform(post("/cursos"))
                 .andReturn().getResponse();
         assertThat(responseCurso.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-
     }
 
     @Test
@@ -158,6 +180,9 @@ class TopicoControllerTest {
 
     }
 
+    @Test
+    @DisplayName("Deberia devolver http 201 cuando los datos son válidos")
+    //@WithMockUser
     void registrar_respuesta_debeRetornar201() throws Exception {
 
         var datosRegistroTopico = new DatosRegistroTopico(
@@ -206,6 +231,9 @@ class TopicoControllerTest {
 
     }
 
+    @Test
+    @DisplayName("Deberia devolver http 201 cuando los datos son válidos")
+    //@WithMockUser
     void registrar_usuario_debeRetornar201() throws Exception {
 
         var datosRegistroUsuario = new DatosRegistroUsuario(
@@ -237,6 +265,9 @@ class TopicoControllerTest {
 
     }
 
+    @Test
+    @DisplayName("Deberia devolver http 201 cuando los datos son válidos")
+    //@WithMockUser
     void registrar_curso_debeRetornar201() throws Exception {
 
         var datosRegistroCurso = new DatosRegistroCurso(
