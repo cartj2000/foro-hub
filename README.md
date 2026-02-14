@@ -1,6 +1,6 @@
 
 <p align="center"> <strong>Desafío Foro Hub</strong>
-<br> Proyecto usando: Java, Gutendex API, Jackson, Spring, Hibernate, PostgreSQL, Maven, validaciones, pruebas y arquitectura limpia. </p>
+<br> Proyecto usando: Java, Maven, Spring Boot Dev Tools, Lombok, Spring MVC Web, Validaciones con Jakarta, MySQL, Spring Data JPA, Flyway Migración, Spring Security, Test, auth0 tokens JWT, Spring Doc Swagger UI y Arquitectura limpia. </p>
 
 <h1 align="center">Hola , mi nombre es Carlos <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="35"></h1>
 <picture> <img align="right" src="https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/Right_Side.gif?raw=true" width = 250px></picture>
@@ -8,19 +8,21 @@
 ## :triangular_ruler:
 🛠 Funcionalidades del proyecto
 
-✔ Menú a través de la consola
+✔ Responsabilidad REST STATELESSNESS (el servidor no necesita saber en que estado se encuentra el cliente y viceversa)
 
-✔ Evita entrada de datos inválidos: entradas mal digitadas, repetición de libros, opciones del menú inconsistentes
+✔ El cliente realiza una solicitud al servidor para enviar o modificar datos a través de un método HTTP
+
+✔ Uso del método GET (solicitar) para listar tópicos
+
+✔ Uso del método POST (enviar) para registrar tópicos
+
+✔ Uso del método PUT (actualizar) para actualizar tópicos
+
+✔ Uso del método DELETE (eliminar) para eliminar tópicos
 
 ✔ Resultados testeados y validados
 
-✔ busqueda optimizada en listar autores por nombre para nombre ó apellido
-
-✔ Inyección de dependencias (DI): AutorRepository y LibroRepository inyectados automáticamente -> LibroService (@Service) -> Principal como un bean de Spring (@Component)
-
-✔ manejo de un libro con muchos autores y un autor con muchos libros usando @Transactional para mantener la sesión abierta al recorrer los autores
-
-✔ Opciones extra y Estadística
+✔ Autenticación / Autorización para restringir el acceso a la información
 
 ## :pencil2:
 📌 Operación del programa
