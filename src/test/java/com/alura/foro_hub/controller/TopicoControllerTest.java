@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 //@SpringBootTest
 @ActiveProfiles("test")
-@WebMvcTest(TopicoController.class)
+@WebMvcTest(TopicoController.class, UsuarioController.class, CursoController.class, RespuestaController.class)
 //@AutoConfigureMockMvc
 @AutoConfigureMockMvc(addFilters = false)
 @AutoConfigureJsonTesters
@@ -77,31 +77,31 @@ class TopicoControllerTest {
 
     @Test
     @DisplayName("Deberia devolver http 400 cuando la request no tenga datos")
-    @WithMockUser
+    //@WithMockUser
     void registrar_escenario1() throws Exception {
 
-        var response = mvc.perform(post("/topicos"))
+        var responseTopico = mvc.perform(post("/topicos"))
                 .andReturn().getResponse();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(responseTopico.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
 
-        var response = mvc.perform(post("/respuestas"))
+        var responseRespuesta = mvc.perform(post("/respuestas"))
                 .andReturn().getResponse();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(responseRespuesta.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
 
-        var response = mvc.perform(post("/usuarios"))
+        var responseUsuario = mvc.perform(post("/usuarios"))
                 .andReturn().getResponse();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(responseUsuario.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
 
-        var response = mvc.perform(post("/cursos"))
+        var responseCurso = mvc.perform(post("/cursos"))
                 .andReturn().getResponse();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(responseCurso.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
 
     }
 
     @Test
     @DisplayName("Deberia devolver http 201 cuando los datos son válidos")
-    @WithMockUser
-    void registrar_escenario2() throws Exception {
+    //@WithMockUser
+    void registrar_topico_debeRetornar201() throws Exception {
 
         var datosRegistroTopico = new DatosRegistroTopico(
                 "Bug inesperado",
@@ -109,23 +109,6 @@ class TopicoControllerTest {
                 1L,
                 1L
         );
-
-        var datosRegistroRespuesta = new DatosRegistroRespuesta(
-                "Revisa la información",
-                1L,
-                1L
-        );
-
-        var datosRegistroUsuario = new DatosRegistroUsuario(
-                "usuario",
-                "123456",
-                "Antony Queen",
-                PerfilUsuario.ALUMNO
-        );
-
-        var datosRegistroCurso = new DatosRegistroCurso(
-                "Spring Boot"
-        ):
 
         var usuarioEjemplo = new Usuario(
                 1L,
@@ -141,12 +124,6 @@ class TopicoControllerTest {
         );
 
         var entidadTopico = new Topico(datosRegistroTopico, usuarioEjemplo, cursoEjemplo);
-
-        var entidadRespuesta = new Respuesta(datosRegistroRespuesta, entidadTopico, usuarioEjemplo);
-
-        var entidadUsuario = new Usuario(datosRegistroUsuario);
-
-        var entidadCurso = new Curso(datosRegistroCurso);
 
         //var status = StatusTopico.ACEPTADO;
         //var fecha = LocalDateTime.now();
@@ -165,44 +142,124 @@ class TopicoControllerTest {
         //        datosDetalle
         //).getJson();
 
-
         when(usuarioRepository.findById(any()))
                 .thenReturn(Optional.of(usuarioEjemplo));
 
+        when(cursoRepository.findById(any()))
+                .thenReturn(Optional.of(cursoEjemplo));
+
+        when(topicoRepository.save(any())).thenReturn(entidadTopico);
+        var responseTopico = mvc.perform(post("/topicos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(datosRegistroTopicoJson.write(datosRegistroTopico).getJson()))
+                .andReturn().getResponse();
+        assertThat(responseTopico.getStatus()).isEqualTo(HttpStatus.CREATED.value());
+        //assertThat(response.getContentAsString()).isEqualTo(jsonEsperado);
+
+    }
+
+    void registrar_respuesta_debeRetornar201() throws Exception {
+
+        var datosRegistroTopico = new DatosRegistroTopico(
+                "Bug inesperado",
+                "la consulta está mal referenciada",
+                1L,
+                1L
+        );
+
+        var datosRegistroRespuesta = new DatosRegistroRespuesta(
+                "Revisa la información",
+                1L,
+                1L
+        );
+
+        var usuarioEjemplo = new Usuario(
+                1L,
+                "usuario",
+                "123456",
+                "Antony Queen",
+                PerfilUsuario.ALUMNO
+        );
+
+        var cursoEjemplo = new Curso(
+                1L,
+                "Spring Boot"
+        );
+
+        var entidadTopico = new Topico(datosRegistroTopico, usuarioEjemplo, cursoEjemplo);
+
+        var entidadRespuesta = new Respuesta(datosRegistroRespuesta, entidadTopico, usuarioEjemplo);
+
+        when(usuarioRepository.findById(any()))
+                .thenReturn(Optional.of(usuarioEjemplo));
 
         when(cursoRepository.findById(any()))
                 .thenReturn(Optional.of(cursoEjemplo));
 
 
-        when(topicoRepository.save(any())).thenReturn(entidadTopico);
-        var response = mvc.perform(post("/topicos")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(datosRegistroTopicoJson.write(datosRegistroTopico).getJson()))
-                .andReturn().getResponse();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        //assertThat(response.getContentAsString()).isEqualTo(jsonEsperado);
-
         when(respuestaRepository.save(any())).thenReturn(entidadRespuesta);
-        var response = mvc.perform(post("/respuestas")
+        var responseRespuesta = mvc.perform(post("/respuestas")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(datosRegistroRespuestaJson.write(datosRegistroRespuesta).getJson()))
                 .andReturn().getResponse();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(responseRespuesta.getStatus()).isEqualTo(HttpStatus.CREATED.value());
+
+    }
+
+    void registrar_usuario_debeRetornar201() throws Exception {
+
+        var datosRegistroUsuario = new DatosRegistroUsuario(
+                "usuario",
+                "123456",
+                "Antony Queen",
+                PerfilUsuario.ALUMNO
+        );
+
+        var usuarioEjemplo = new Usuario(
+                1L,
+                "usuario",
+                "123456",
+                "Antony Queen",
+                PerfilUsuario.ALUMNO
+        );
+
+        var entidadUsuario = new Usuario(datosRegistroUsuario);
+
+        when(usuarioRepository.findById(any()))
+                .thenReturn(Optional.of(usuarioEjemplo));
 
         when(usuarioRepository.save(any())).thenReturn(entidadUsuario);
-        var response = mvc.perform(post("/usuarios")
+        var responseUsuario = mvc.perform(post("/usuarios")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(datosRegistroUsuarioJson.write(datosRegistroUsuario).getJson()))
                 .andReturn().getResponse();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(responseUsuario.getStatus()).isEqualTo(HttpStatus.CREATED.value());
+
+    }
+
+    void registrar_curso_debeRetornar201() throws Exception {
+
+        var datosRegistroCurso = new DatosRegistroCurso(
+                "Spring Boot"
+        );
+
+        var cursoEjemplo = new Curso(
+                1L,
+                "Spring Boot"
+        );
+
+        var entidadCurso = new Curso(datosRegistroCurso);
+
+        when(cursoRepository.findById(any()))
+                .thenReturn(Optional.of(cursoEjemplo));
+
 
         when(cursoRepository.save(any())).thenReturn(entidadCurso);
-        var response = mvc.perform(post("/cursos")
+        var responseCurso = mvc.perform(post("/cursos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(datosRegistroCursoJson.write(datosRegistroCurso).getJson()))
                 .andReturn().getResponse();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
-
+        assertThat(responseCurso.getStatus()).isEqualTo(HttpStatus.CREATED.value());
     }
 
 }
