@@ -39,8 +39,8 @@ public class TokenService {
     private Long expiration;
     private Instant FechaExpiracion() {
         // usar los milisegundos definidos en application.properties
-        //return Instant.now().plusMillis(expiration);
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));
+        return Instant.now().plusMillis(expiration);
+        //return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));
     }
 
     // --> comentariar method siguiente para ver el token:
