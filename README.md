@@ -45,7 +45,7 @@ Registro de curso:	POST http://localhost.8080/cursos
 
 Eliminar curso:	DELETE http://localhost.8080/cursos/id
 
-Actualizar curso:	PUT http://localhost.8080/cursos
+Actualizar curso:	PUT http://localhost.8080/cursos/id
 
 Lista de cursos:	GET http://localhost.8080/cursos
 
@@ -55,7 +55,7 @@ Registro de usuario:	POST http://localhost.8080/usuarios
 
 Eliminar usuario:	DELETE http://localhost.8080/usuarios/id
 
-Actualizar usuario:	PUT http://localhost.8080/usuarios
+Actualizar usuario:	PUT http://localhost.8080/usuarios/id
 
 Lista de usuarios:	GET http://localhost.8080/usuarios
 
@@ -65,7 +65,7 @@ Registro de topico:	POST http://localhost.8080/topicos
 
 Eliminar topico:	DELETE http://localhost.8080/topicos/id
 
-Actualizar topico:	PUT http://localhost.8080/topicos
+Actualizar topico:	PUT http://localhost.8080/topicos/id
 
 Lista de topicos:	GET http://localhost.8080/topicos
 
@@ -75,7 +75,7 @@ Registro de respuesta:	POST http://localhost.8080/respuestas
 
 Eliminar respuesta:	DELETE http://localhost.8080/respuestas/id
 
-Actualizar respuesta:	PUT http://localhost.8080/respuestas
+Actualizar respuesta:	PUT http://localhost.8080/respuestas/id
 
 Lista de respuestas:	GET http://localhost.8080/respuestas
 
