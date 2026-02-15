@@ -24,30 +24,203 @@
 
 ✔ Autenticación / Autorización para restringir el acceso a la información
 
+✔ Migración a través de Flyway
+
 ## :pencil2:
 📌 Operación del programa
 
-Usuario ingresa un número entre 1 y 9:	Selecciona la opción:
+Antes de empezar: entrar a MySQL y ejecutar:
 
-Ingreso del número 1:	buscar libros por título
+create database forohub;
 
-Ingreso del número 2:	listar libros registrados
+insert into usuarios set login ='jessica.fernandez@alura.com',contrasena = '123456';
 
-Ingreso del número 3:	listar autores registrados
+update usuarios set nombre = 'jessica fernandez' where login = 'jessica.fernandez@alura.com';
 
-Ingreso del número 4:	listar autores vivos en un determinado año -> el año puede ser negativo (A.C.) 
+update usuarios set contrasena='$2a$10$Y50UaMFOxteibQEYLrwuHeehHYfcoafCopUazP12.rqB41bsolF5.' where login='jessica.fernandez@alura.com';
 
-Ingreso del número 5:	listar libros por idioma -> En la base de datos pueden existir todos, por ejemplo italiano, alemán, etc y se filtran solo 4: (fr - francés, pt - portugués, es - español, en - inglés). - Muestra estadisticas: Cantidad de libros del idioma
+Introducir la información usando insomnia a través de los siguientes end points:
 
-Ingreso del número 6:	top 10 libros más descargados - Muestra estadisticas: Media de descargas, Máximo de descargas, Mínimo de descargas, Cantidad de libros
+Registro de curso:	POST http://localhost.8080/cursos
 
-Ingreso del número 7:	listar autores por nombre - encuentra autores tanto por nombre como por apellido
+Eliminar curso:	DELETE http://localhost.8080/cursos/id
 
-Ingreso del número 8:	listar autores por nacimiento -> el año puede ser negativo (A.C.)
+Actualizar curso:	PUT http://localhost.8080/cursos
 
-Ingreso del número 9:	listar autores por nacimiento -> el año puede ser negativo (A.C.)
+Lista de cursos:	GET http://localhost.8080/cursos
 
-Ingreso del número 0:	Finaliza la aplicación
+Detallar curso:	GET http://localhost.8080/cursos/id
+
+Registro de usuario:	POST http://localhost.8080/usuarios
+
+Eliminar usuario:	DELETE http://localhost.8080/usuarios/id
+
+Actualizar usuario:	PUT http://localhost.8080/usuarios
+
+Lista de usuarios:	GET http://localhost.8080/usuarios
+
+Detallar usuario:	GET http://localhost.8080/usuarios/id
+
+Registro de topico:	POST http://localhost.8080/topicos
+
+Eliminar topico:	DELETE http://localhost.8080/topicos/id
+
+Actualizar topico:	PUT http://localhost.8080/topicos
+
+Lista de topicos:	GET http://localhost.8080/topicos
+
+Detallar topico:	GET http://localhost.8080/topicos/id
+
+Registro de respuesta:	POST http://localhost.8080/respuestas
+
+Eliminar respuesta:	DELETE http://localhost.8080/respuestas/id
+
+Actualizar respuesta:	PUT http://localhost.8080/respuestas
+
+Lista de respuestas:	GET http://localhost.8080/respuestas
+
+Detallar respuesta:	GET http://localhost.8080/respuestas/id
+
+Adicionalmente usar Swagger desde: http://localhost:8080/swagger-ui/index.html#/
+
+Explorando: /v3/api-docs para ver la documentación desde spring doc
+
+Una vez ingresada la información también es posible correr test 
+
+Si se requiere volver a ejecutar el programa después de haber realizado el test:
+
+Debido a que durante el test se deshabilita el flyway: 
+
+entrar al MySQL Workbench -> Navigator -> SCHEMAS
+
+seleccionar forohub -> Server -> Data Export
+
+seleccionar cursos, respuestas, topicos, usuarios
+
+Export to Dump Project Folder -> Downloads
+
+entrar a MySQL y ejecutar:
+
+drop database forohub;
+
+create database forohub;
+
+entrar al MySQL Workbench -> Navigator -> SCHEMAS
+
+seleccionar forohub -> Server -> Data Import
+
+Import from Dump Project Folder -> Downloads
+
+seleccionar cursos, respuestas, topicos, usuarios
+
+Uso de H2 en los tests
+
+Cumplimiento de los siguientes requerimientos del trello:
+
+endpoint para el registro de tópicos para aceptar solicitudes POST para la URI /topicos
+
+envio de los datos del topico: titulo, mensaje, autor y curso en el cuerpo de la solicitud en formato JSON
+
+uso de la anotación @RequestBody para recibir los datos
+
+uso del método save del JpaRepository para la persistencia del tópico creado
+
+uso de la anotación Java integrada en Spring @Valid
+
+todos los campos obligatorios
+
+no se permite el registro de tópicos duplicados con el mismo título y mensaje
+
+endpoint para el listado de los tópicos para aceptar solicitudes GET para la URI /topicos
+
+datos devueltos de los tópicos: titulo, mensaje, fecha de creación, estado, autor y curso en el cuerpo de la respuesta en formato JSON
+
+uso del método findALL del JpaRepository asociado al tópico
+
+listado de los primeros 10 resultados ordenados por fecha de creación del tópico en orden ASC
+
+uso de la anotación @PageableDefault para el listado de los resultados con paginación
+
+endpoint para el detalle del tópico para aceptar solicitudes GET para la URI /topicos{id}
+
+datos devueltos de los tópicos: titulo, mensaje, fecha de creación, estado, autor y curso en el cuerpo de la respuesta en formato JSON
+
+uso de la anotación @PathVariable para recibir el ID de la solicitud GET
+
+verificación funcional del ID
+
+endpoint para la actualización de los datos de un tópico para aceptar solicitudes PUT para la URI /topicos{id}
+
+no se permite el registro de tópicos duplicados con el mismo título y mensaje
+
+verificación funcional del ID
+
+uso de la anotación @PathVariable para obtener el ID de la solicitud GET
+
+uso del método isPresent() de la clase Java llamada Optional para verificar la existencia del tópico a actualizar
+
+endpoint para la eliminación de un tópico para aceptar solicitudes DELETE para la URI /topicos{id}
+
+verificación funcional del ID
+
+uso de la anotación @PathVariable para obtener el ID de la solicitud DELETE
+
+uso del método isPresent() de la clase Java llamada Optional para verificar la existencia del tópico a eliminar
+
+uso del método deleteById() del JpaRepository asociado al tópico
+
+pruebas de la API usando Insomnia
+
+actualización del repositorio en GitHub
+
+autenticación de los usuarios con Spring Security
+
+uso de la dependencia Spring Security en el archivo pom.xml
+
+uso de la clase SecurityConfigurations con información para el acceso a través de solicitudes http
+
+uso de las anotaciones @Configuration y @EnableWebSecurity
+
+uso de la clase HttpSecurity
+
+uso de AutenticacionController para recibir las solicitudes de inicio de sesión.
+
+uso de las anotaciones @RestController y @RequestMapping para definir la URL del controller
+
+uso de la instancia DTO DatosAutenticacion para recibir los datos de incio de sesión y contraseña
+
+uso del método AuthenticationManager de la clase SecurityConfigurations
+
+uso de las anotaciones @PostMapping, @RequestBody y @Valid para recibir y validar los datos de la solicitud
+
+migración para incluir una nueva tabla para los datos de los usuarios
+
+uso de JWT (JSON Web Token) para compartir información entre cliente y servidor
+
+uso de la biblioteca Auth0 en el archivo pom.xml
+
+uso de la dependencia Spring Security en el archivo pom.xml
+
+uso de la clase DTO UsernamePasswordAuthenticationToken para recibir el nombre de usuario y contraseña
+
+uso de la clase TokenService para aislar la generación y validación del token
+
+uso del método generarToken() utilizando la biblioteca JWT para crear un token con el algoritmo HMAC256 y una contraseña
+
+configuración de la fecha de expiración del token
+
+inyección de la clase TokenService en el AutenticacionController para obtener el token retornado en la respuesta de la solicitud de inicio de sesión
+
+uso de los atributos jwt.secret y jwt.expiration definidos en el archivo application.properties
+
+uso de la URL "http://localhost:8080/login" pasando el nombre de usuario y contraseña para la generación del token en formato JSON
+
+uso de la clase SecurityFilter (interceptor) para mapear las URLs y validar los tokens en cada solicitud
+
+manejo de excepciones a través de ValidacionException
+
+
+
 
 
 ## :rocket:
@@ -55,24 +228,37 @@ Ingreso del número 0:	Finaliza la aplicación
 
 Java 17: Lógica principal del sistema
 
-Gutendex API: Obtención de ebook
+Maven: Gestión de librerias (dependencias)
 
-Jackson: Procesamiento de JSON
+Spring Boot Dev Tools:
 
-Spring: Framework para Inversión de Control (IoC), Programación Orientada a Aspectos (AOP) y Spring Boot para automatización.
+Lombok:
+
+Spring MVC Web:
+
+Validaciones con Jakarta:
+
+MySQL: Base de datos relacional
 
 Hibernate: Framework para mapeo objeto relacional e implementación de Java Persistence API (JPA)
 
-PostgreSQL: Base de datos relacional
+Flyway Migración: migraciones
 
-Maven: Gestión de librerias (dependencias)
+Spring Security: autenticación y autorización
+
+Spring Security Test: pruebas de seguridad
+
+auth0: gneración y validación de tokens JWT
+
+Spring Doc: Documentación Swagger UI
+
+Spring: Framework para Inversión de Control (IoC), Programación Orientada a Aspectos (AOP) y Spring Boot para automatización.
 
 SOLID / Arquitectura Limpia	Diseño desacoplado, extensible y testeable
 
 
 ## :key:
 🧠 Principios aplicados
-
 
 SRP — Single Responsibility Principle
 
@@ -81,7 +267,6 @@ Cada clase tiene una única responsabilidad.
 OCP — Open/Closed Principle
 
 Abierto a extensión | Cerrado a modificación
-
 
 DIP — Dependency Inversion Principle
 
@@ -95,8 +280,6 @@ IoC — Inversión de Control
 
 DI — Dependency Injection
 
-La dependencia se suministra mediante el Service LibroService
-
 
 ## :clapper:
 📌 Esto permite:
@@ -109,63 +292,162 @@ Extensión sin romper código
 ## :pushpin:
 🏆 Buenas prácticas aplicadas
 
-
 Constructor injection para dependencia obligatoria
-
-LibroService
-
-Manejo de errores en la entrada de datos
-
-Clases pequeñas con responsabilidad única (SRP) para aplicar OCP
-
-La clase Principal crea las dependencias (IoC)
-
 
 ## :key:
 Estructura de paquetes:
 
 src/
-└── com/alura/literalura/
+└── main/java/com/alura/foro_hub/
 
-├── model/
+│   └── ForoHubApplication
 
-│   ├── Autor.java
+├── main/java/com/alura/foro_hub/controller/
 
-│   ├── Categoria.java
+│   ├── AutenticacionController
 
-│   ├── Datos.java
+│   ├── CursoController
 
-│   ├── DatosAutor.java
+│   ├── RespuestaController
 
-│   ├── DatosLibro.java
+│   ├── TopicoController
 
-│   └── Libro.java
+│   └── UsuarioController
 
-├── repository/
+├── main/java/com/alura/foro_hub/domain/
 
-│   ├── AutorRepository.java
+│   └── ValidacionException
 
-│   ├── LibroRepository.java
+├── main/java/com/alura/foro_hub/domain/topico
 
-├── service/
+│   ├── Curso
 
-│   ├── ConsultaGemini.java
+│   ├── CursoRepository
 
-│   ├── ConsumoAPI.java
+│   ├── Respuesta
 
-│   ├── ConvierteDatos.java
+│   ├── RespuestaRepository
 
-│   ├── IConvierteDatos.java
+│   ├── StatusRespuesta
 
-│   └── LibroService.java
+│   ├── StatusTopico
 
-└── principal/Principal.java
+│   ├── Topico
 
+│   └── TopicoRepository
+
+├── main/java/com/alura/foro_hub/domain/topico/dto
+
+│   ├── DatosActualizacionCurso
+
+│   ├── DatosDetalleCurso
+
+│   ├── DatosListaCurso
+
+│   ├── DatosRegistroCurso
+
+│   ├── DatosActualizacionRespuesta
+
+│   ├── DatosDetalleRespuesta
+
+│   ├── DatosListaRespuesta
+
+│   ├── DatosRegistroRespuesta
+
+│   ├── DatosActualizacionTopico
+
+│   ├── DatosDetalleTopico
+
+│   ├── DatosListaTopico
+
+│   └── DatosRegistroTopico
+
+├── main/java/com/alura/foro_hub/domain/usuario
+
+│   ├── AutenticacionService
+
+│   ├── DatosAutenticacion
+
+│   ├── PerfilUsuario
+
+│   ├── Usuario
+
+│   └── UsuarioRepository
+
+├── main/java/com/alura/foro_hub/domain/usuario/dto
+
+│   ├── DatosActualizacionUsuario
+
+│   ├── DatosDetalleUsuario
+
+│   ├── DatosListaUsuario
+
+│   └── DatosRegistroUsuario
+
+├── main/java/com/alura/foro_hub/infra/
+
+└── main/java/com/alura/foro_hub/infra/exceptions/
+
+│   └── GestorDeErrores
+
+└── main/java/com/alura/foro_hub/infra/security/
+
+│   ├── DatosTokenJWT
+
+│   ├── SecurityConfigurations
+
+│   ├── SecurityFilter
+
+│   └── TokenService
+
+└── main/java/com/alura/foro_hub/infra/springdoc/
+
+│   └── SpringDocConfiguration
+
+└── main/resources/
+
+│   ├── application.properties
+
+│   ├── application-prod.properties
+
+│   └── application-test.properties
+
+└── main/resources/db/migration/
+
+│   ├── V1
+
+│   ├── V2
+
+│   ├── V3
+
+│   ├── V4
+
+│   ├── V5
+
+│   ├── V6
+
+│   ├── V7
+
+│   ├── V8
+
+│   ├── V9
+
+│   ├── V10
+
+│   └── V11
+
+└── src/test/java/com/alura/foro_hub
+
+│   └── ForoHubApplicationTests
+
+└── src/test/java/com/alura/foro_hub/controller/
+
+│   └── TopicoControllerTest
 
 ## :flashlight:
 - Acceso al proyecto: a través de GitHub
 - Estado del proyecto: funcional 100%
-- Características de la aplicación: Desafio literalura Alura Latam
+- Características de la aplicación: Desafio Foro Hub Alura Latam
 - Desarrolladores: Carlos Arturo Torres Jara
 - Licencia: código abierto
 - Github: cartj2000
@@ -177,4 +459,4 @@ Agradecimientos:
 
 - 👉Alura Latam: Equipo docente
 - 👉Oracle: programa One Oracle Next Education
-- 👉Gutendex-API: API de ebook
+- 👉auth0, springdoc, h2: librerias
