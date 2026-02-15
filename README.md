@@ -81,14 +81,12 @@ Lista de respuestas:	GET http://localhost.8080/respuestas
 
 Detallar respuesta:	GET http://localhost.8080/respuestas/id
 
-Adicionalmente usar Swagger desde: http://localhost:8080/swagger-ui/index.html#/
-
-Explorando: /v3/api-docs para ver la documentación desde spring doc
+## :pencil2:
+📌 Test del programa
 
 Una vez ingresada la información también es posible correr test (Uso de H2 en los tests)
 
-
-
+uso de spring doc Swagger desde: http://localhost:8080/swagger-ui/index.html#/ (/v3/api-docs)
 
 Si se requiere volver a ejecutar el programa después de haber realizado el test:
 
@@ -116,10 +114,8 @@ Import from Dump Project Folder -> Downloads
 
 seleccionar cursos, respuestas, topicos, usuarios
 
-
-
-
-Cumplimiento de los siguientes requerimientos del trello:
+## :pencil2:
+📌 Cumplimiento de los siguientes requerimientos del trello:
 
 endpoint para el registro de tópicos para aceptar solicitudes POST para la URI /topicos
 
@@ -223,10 +219,6 @@ uso de la clase SecurityFilter (interceptor) para mapear las URLs y validar los 
 
 manejo de excepciones a través de ValidacionException
 
-
-
-
-
 ## :rocket:
 🚀 Tecnologías usadas :rocket:
 
@@ -260,7 +252,6 @@ Spring: Framework para Inversión de Control (IoC), Programación Orientada a As
 
 SOLID / Arquitectura Limpia	Diseño desacoplado, extensible y testeable
 
-
 ## :key:
 🧠 Principios aplicados
 
@@ -284,14 +275,12 @@ IoC — Inversión de Control
 
 DI — Dependency Injection
 
-
 ## :clapper:
 📌 Esto permite:
 
 Desacoplamiento:	Módulos independientes y mantenibles
 
 Extensión sin romper código
-
 
 ## :pushpin:
 🏆 Buenas prácticas aplicadas
@@ -456,7 +445,6 @@ src/
 - Licencia: código abierto
 - Github: cartj2000
 - Linkedin: CARLOS ARTURO TORRES JARA
-
 
 ## :heavy_exclamation_mark:
 Agradecimientos:
