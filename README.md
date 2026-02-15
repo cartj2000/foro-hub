@@ -84,13 +84,13 @@ Detallar respuesta:	GET http://localhost.8080/respuestas/id
 ## :pencil2:
 📌 Test del programa
 
-Una vez ingresada la información también es posible correr test (Uso de H2 en los tests)
+Una vez ingresada la información también es posible correr test (base de datos en memoria H2 para los tests)
 
 uso de spring doc Swagger desde: http://localhost:8080/swagger-ui/index.html#/ (/v3/api-docs)
 
 Si se requiere volver a ejecutar el programa después de haber realizado el test:
 
-Debido a que durante el test se deshabilita el flyway: 
+Debido a que durante el test se deshabilita el Flyway:
 
 entrar al MySQL Workbench -> Navigator -> SCHEMAS
 
@@ -135,13 +135,13 @@ endpoint para el listado de los tópicos para aceptar solicitudes GET para la UR
 
 datos devueltos de los tópicos: titulo, mensaje, fecha de creación, estado, autor y curso en el cuerpo de la respuesta en formato JSON
 
-uso del método findALL del JpaRepository asociado al tópico
+uso del método findAll del JpaRepository asociado al tópico
 
 listado de los primeros 10 resultados ordenados por fecha de creación del tópico en orden ASC
 
 uso de la anotación @PageableDefault para el listado de los resultados con paginación
 
-endpoint para el detalle del tópico para aceptar solicitudes GET para la URI /topicos{id}
+endpoint para el detalle del tópico para aceptar solicitudes GET para la URI /topicos/{id}
 
 datos devueltos de los tópicos: titulo, mensaje, fecha de creación, estado, autor y curso en el cuerpo de la respuesta en formato JSON
 
@@ -149,7 +149,7 @@ uso de la anotación @PathVariable para recibir el ID de la solicitud GET
 
 verificación funcional del ID
 
-endpoint para la actualización de los datos de un tópico para aceptar solicitudes PUT para la URI /topicos{id}
+endpoint para la actualización de los datos de un tópico para aceptar solicitudes PUT para la URI /topicos/{id}
 
 no se permite el registro de tópicos duplicados con el mismo título y mensaje
 
@@ -159,7 +159,7 @@ uso de la anotación @PathVariable para obtener el ID de la solicitud GET
 
 uso del método isPresent() de la clase Java llamada Optional para verificar la existencia del tópico a actualizar
 
-endpoint para la eliminación de un tópico para aceptar solicitudes DELETE para la URI /topicos{id}
+endpoint para la eliminación de un tópico para aceptar solicitudes DELETE para la URI /topicos/{id}
 
 verificación funcional del ID
 
