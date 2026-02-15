@@ -34,7 +34,10 @@ public class TokenService {
         }
     }
 
+    @Value("$(api.security.token.expiration)")
+    private Long expiration;
     private Instant FechaExpiracion() {
+        //return Instant.now().plusMillis(expiration);
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));
     }
 
