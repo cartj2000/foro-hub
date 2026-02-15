@@ -1,6 +1,6 @@
 
 <p align="center"> <strong>Desafío Foro Hub</strong>
-<br> Proyecto usando: Java, Maven, Spring Boot Dev Tools, Lombok, Spring MVC Web, Validaciones con Jakarta, MySQL, Spring Data JPA, Flyway, Spring Security, Test, auth0 tokens JWT, Spring Doc Swagger UI y Arquitectura limpia. </p>
+<br> Proyecto usando: Java, Maven, Spring Boot Dev Tools, Lombok, Spring MVC Web, Jakarta, MySQL, Spring Data JPA, Flyway, Spring Security, Spring Security Test, auth0 tokens JWT, Spring Doc Swagger UI y Arquitectura limpia. </p>
 
 <h1 align="center">Hola , mi nombre es Carlos <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="35"></h1>
 <picture> <img align="right" src="https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/Right_Side.gif?raw=true" width = 250px></picture>
@@ -459,4 +459,4 @@ Agradecimientos:
 
 - 👉Alura Latam: Equipo docente
 - 👉Oracle: programa One Oracle Next Education
-- 👉auth0, springdoc, h2: librerias
+- 👉springdoc: documentación
