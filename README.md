@@ -1,6 +1,6 @@
 
 <p align="center"> <strong>Desafío Foro Hub</strong>
-<br> Proyecto usando: Java, Maven, Spring Boot Dev Tools, Lombok, Spring MVC Web, Validaciones con Jakarta, MySQL, Spring Data JPA, Flyway Migración, Spring Security, Test, auth0 tokens JWT, Spring Doc Swagger UI y Arquitectura limpia. </p>
+<br> Proyecto usando: Java, Maven, Spring Boot Dev Tools, Lombok, Spring MVC Web, Validaciones con Jakarta, MySQL, Spring Data JPA, Flyway, Spring Security, Test, auth0 tokens JWT, Spring Doc Swagger UI y Arquitectura limpia. </p>
 
 <h1 align="center">Hola , mi nombre es Carlos <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="35"></h1>
 <picture> <img align="right" src="https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/Right_Side.gif?raw=true" width = 250px></picture>
@@ -230,27 +230,27 @@ Java 17: Lógica principal del sistema
 
 Maven: Gestión de librerias (dependencias)
 
-Spring Boot Dev Tools:
+Spring Boot Dev Tools: Reinicio automático y recarga en vivo
 
-Lombok:
+Lombok: Automatización de constructores, métodos, captadores, definidores
 
-Spring MVC Web:
+Spring MVC Web: Arquitectura basada en anotaciones en aplicaciones web MVC
 
-Validaciones con Jakarta:
+Jakarta: Validaciones mediante anotaciones 
 
 MySQL: Base de datos relacional
 
 Hibernate: Framework para mapeo objeto relacional e implementación de Java Persistence API (JPA)
 
-Flyway Migración: migraciones
+Flyway: control de versiones en cambios de esquemas de la base de datos
 
-Spring Security: autenticación y autorización
+Spring Security: autenticación y autorización para el control de acceso
 
-Spring Security Test: pruebas de seguridad
+Spring Security Test: soporte para pruebas de autenticación y autorización
 
-auth0: gneración y validación de tokens JWT
+auth0: generación y validación de tokens JWT
 
-Spring Doc: Documentación Swagger UI
+Spring Doc: Swagger UI Documentación 
 
 Spring: Framework para Inversión de Control (IoC), Programación Orientada a Aspectos (AOP) y Spring Boot para automatización.
 
