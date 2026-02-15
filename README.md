@@ -85,7 +85,10 @@ Adicionalmente usar Swagger desde: http://localhost:8080/swagger-ui/index.html#/
 
 Explorando: /v3/api-docs para ver la documentación desde spring doc
 
-Una vez ingresada la información también es posible correr test 
+Una vez ingresada la información también es posible correr test (Uso de H2 en los tests)
+
+
+
 
 Si se requiere volver a ejecutar el programa después de haber realizado el test:
 
@@ -113,7 +116,8 @@ Import from Dump Project Folder -> Downloads
 
 seleccionar cursos, respuestas, topicos, usuarios
 
-Uso de H2 en los tests
+
+
 
 Cumplimiento de los siguientes requerimientos del trello:
 
