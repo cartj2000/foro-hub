@@ -35,7 +35,7 @@ public class TokenService {
     }
 
 
-    @Value("$(api.security.token.expiration)")
+    @Value("${api.security.token.expiration}")
     private Long expiration;
     private Instant FechaExpiracion() {
         // usar los milisegundos definidos en application.properties
